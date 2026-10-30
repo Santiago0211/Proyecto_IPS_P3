@@ -6,7 +6,7 @@ Port a **Java + Swing + JDBC** del proyecto original en C#/WPF. Usa **la misma b
 ## 1. Requisitos
 - JDK 17 o superior (sirve el 21)
 - Apache NetBeans 17 o superior
-- Oracle Database XE 18c (servicio `XEPDB1`)
+- Oracle Database XE 18c o 21c (servicio `XEPDB1`)
 - Internet la primera vez (Maven descarga el driver `ojdbc11`)
 
 ## 2. Crear la base de datos (SQL Developer)
@@ -36,28 +36,13 @@ Port a **Java + Swing + JDBC** del proyecto original en C#/WPF. Usa **la misma b
 (Los demás siguen el mismo patrón `usuario` / `usuario123`.)
 
 ## 5. Qué incluye
-- Inicio de sesión por rol (paciente, doctor, administrador), con la misma contraseña SHA-256 del original.
+- Inicio de sesión por rol (paciente, doctor, administrador)
 - **Paciente:** registrarse, ver sus citas, agendar (especialidad → doctor → fecha → hora libre) y cancelar.
 - **Doctor:** ver sus citas, marcarlas como completadas o cancelarlas.
 - **Administrador:** resumen con contadores, todas las citas (completar, cancelar, reactivar), lista de pacientes y de doctores, registro de doctores.
 - Reglas del original: no citas en fechas u horas pasadas, no doblar horario del doctor ni del paciente, transiciones de estado válidas.
 
-## 6. Qué NO incluye (sí existía en la versión C#)
-Bot de Telegram/n8n y API, historias clínicas, responsables y parentescos (menores de edad),
-reportes en PDF, administración de EPS/ciudades/especialidades, cambio de contraseña desde pantalla
-(el método ya existe en `CredencialDAO.cambiarPassword`) y tema oscuro.
 
-## 7. Estructura (misma arquitectura por capas)
-```
-src/main/java/co/edu/upc/ips/
-  entity/   Paciente, Doctor, Cita, Opcion, Sesion      (ENTITY)
-  dal/      Conexion, *DAO (JDBC + paquetes PL/SQL)       (DAL)
-  bll/      AuthService, CitaService, ...                  (BLL)
-  gui/      LoginFrame, PacienteFrame, DoctorFrame, ...    (GUI)
-  util/     Seguridad (hash), Validador
-sql/        PASO_1 … PASO_5
-config.properties   conexión a Oracle
-```
 
 ## 8. Problemas frecuentes
 - **ORA-12514 / no se puede conectar:** el servicio debe ser `XEPDB1` y el listener debe estar encendido.
