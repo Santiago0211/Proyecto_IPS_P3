@@ -1,4 +1,4 @@
-# HealthLink IPS – versión Java (NetBeans)
+# HealthLink IPS – Java (NetBeans)
 
 Port a **Java + Swing + JDBC** del proyecto original en C#/WPF. Usa **la misma base de datos Oracle**
 (tablas, paquetes PL/SQL y triggers de `sql/`), así que los datos de prueba son los mismos.
